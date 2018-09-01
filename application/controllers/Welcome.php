@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once(APPPATH.'libraries/Format.php');
+require_once(APPPATH.'libraries/REST_Controller.php');
 
 class Welcome extends CI_Controller {
 
@@ -20,6 +22,16 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		$this->load->database();
+
+		$feeds = $this->db->get('usr_users');
+		$data['records'] = $feeds->result();
+		foreach ($data['records'] as $row)
+		{
+			echo $row->id;
+			echo $row->username;
+			echo $row->email;
+		}
 		$this->load->view('welcome_message');
 	}
 }
